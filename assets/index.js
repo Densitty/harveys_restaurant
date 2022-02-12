@@ -29,3 +29,8 @@ images.forEach((imgItem) => {
 });
 
 console.log(galleryItem);
+
+// try to use it to remove alert and query string at the end of url
+// if (location.href.match(/\?.*/) && document.referrer) {
+//   location.href = location.href.replace(/\?.*/, "");
+// }

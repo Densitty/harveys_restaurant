@@ -1,4 +1,6 @@
-<?php require_once './connections/make_json.php'?>
+<?php
+
+require_once './connections/make_json.php'?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,34 +13,57 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/style.css">
-  <title>Harvey's Kitchen</title>
+  <title>Harveys Kitchen</title>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <!-- <img src="https://thetius.com/wp-content/uploads/2019/11/chatbot-4071274_1920.jpg"
-        style="width:75px; margin: 10px; border-radius: 10px;" alt="">
-      <a href="" class="navbar-brand">Navbar</a> -->
+        style="width:75px; margin: 10px; border-radius: 10px;" alt="">-->
+      <a href="/" class="navbar-brand">Harveys</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=#navbarNav>
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="" aria-current="page" class="nav-link active">Home</a>
+            <a href="/" aria-current="page" class="nav-link active">Home</a>
           </li>
           <li class="nav-item">
             <a href="#about" class="nav-link">About Us</a>
           </li>
           <li class="nav-item">
-            <a href="#galleries" class="nav-link">Menu</a>
+            <a href="#gallery" class="nav-link">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a href="#booking" class="nav-link">Reservation</a>
           </li>
 
         </ul>
       </div>
     </div>
   </nav>
+
+  <?php
+if (isset($_GET['booking']) && !empty($_GET['booking'])) {
+    if ($_GET['booking'] === 'Booking successful') {
+        echo '<div class="alert alert-success text-center">' .
+            'You have successfully made a booking.'
+            . '</div>';
+
+    } else if ($_GET['booking'] === 'Booking unsuccessful') {
+        echo '<div class="alert alert-danger text-center">' .
+            'An error occured in making your booking. Please try again.'
+            . '</div>';
+    } else if ($_GET['booking'] === 'Empty form') {
+        echo '<div class="alert alert-danger text-center">' .
+            'Please fill the form before you submit.'
+            . '</div>';
+
+    }
+}
+?>
 
   <header id="header">
     <div class="intro">
@@ -47,7 +72,7 @@
           <div class="row">
             <div class="intro-text">
               <h1>Harvey's Kitchen</h1>
-              <p>Restaurant | Coffee | Breakfast</p>
+              <p>Restaurant | Snacks | Drinks</p>
               <a href="#about" class="btn btn-custom btn-lg page-scroll">
                 Discover our Story
               </a>
@@ -493,7 +518,7 @@ if (!isset($_GET['meal_type'])) {
   </section>
 
   <!-- reservation form -->
-  <section class="container reservations">
+  <section id="booking" class="container reservations">
     <h2 class="text-center">Make Reservations</h2>
     <div class="row">
       <div class="col-sm-12 col-md-6">
@@ -501,7 +526,7 @@ if (!isset($_GET['meal_type'])) {
       </div>
 
       <div class="col-sm-12 col-md-6">
-        <form action="">
+        <form action="/connections/bookings.php" method="POST">
           <div class="form-group booking-element">
             <label for="name">Name</label>
             <input class="form-control" type="text" id="name" placeholder="Your name" name="name" required>
@@ -510,32 +535,33 @@ if (!isset($_GET['meal_type'])) {
           <div class="form-group booking-element">
             <label for="seats">Number of Seats</label>
             <input class="form-control" type="number" id="seats" placeholder="Number of seats" name="seats" min="1"
-              required>
+              max="9" required>
           </div>
 
           <div class="form-group booking-element">
-            <label for="day">Day</label>
-            <select class="form-select" name="day" id="day">
+            <label for="date">Day</label>
+            <input class="form-control" type="date" name="date" id="date">
+            <!-- <select class="form-select" name="day" id="day">
               <option value="saturday">Saturday</option>
               <option value="monday">Monday</option>
               <option value="tuesday">Tuesday</option>
               <option value="wednesday">Wednesday</option>
               <option value="thursday">Thursday</option>
               <option value="friday">Friday</option>
-            </select>
+            </select> -->
           </div>
 
           <div class="form-group booking-element">
             <label for="meal">Meal</label>
             <select class="form-select" name="meal" id="meal">
-              <option value="breafast">Breakfast</option>
+              <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
               <option value="snacks">Snacks</option>
             </select>
           </div>
 
-          <button type="submit" class="btn btn-custom">Make Reservation</button>
+          <button type="submit" name="submit" class="btn btn-custom">Make Reservation</button>
         </form>
       </div>
     </div>
